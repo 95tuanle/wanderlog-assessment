@@ -28,7 +28,6 @@ class Result {
         // We use these tools in our coding too, but in our interviews, we also don't
         // allow using these, and want to see how we do without them.
         //
-
         HashMap<String, Integer> signIn = new HashMap<>();
         HashMap<String, Integer> signOut = new HashMap<>();
         for (String log : logs) {

@@ -1,8 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -26,15 +26,23 @@ class Result {
         // We use these tools in our coding too, but in our interviews, we also don't
         // allow using these, and want to see how we do without them.
         //
-        HashMap<String, Integer> map = new HashMap<>();
+        TreeMap<String, Integer> map = new TreeMap<>();
         for (String transaction : transactions) map.put(transaction, map.getOrDefault(transaction, 0) + 1);
-        List<String> keys = new ArrayList<>(map.keySet());
-        keys.remove("prune");
-        Collections.sort(keys);
         List<String> result = new ArrayList<>();
         if (map.containsKey("prune")) result.add("prune " + map.get("prune"));
-        for (String key : keys) result.add(key + " " + map.get(key));
+        map.remove("prune");
+        for (Map.Entry<String, Integer> entry : map.entrySet()) result.add(entry.getKey() + " " + entry.getValue());
         return result;
+
+//        HashMap<String, Integer> map = new HashMap<>();
+//        for (String transaction : transactions) map.put(transaction, map.getOrDefault(transaction, 0) + 1);
+//        List<String> keys = new ArrayList<>(map.keySet());
+//        keys.remove("prune");
+//        Collections.sort(keys);
+//        List<String> result = new ArrayList<>();
+//        if (map.containsKey("prune")) result.add("prune " + map.get("prune"));
+//        for (String key : keys) result.add(key + " " + map.get(key));
+//        return result;
     }
 
 }
