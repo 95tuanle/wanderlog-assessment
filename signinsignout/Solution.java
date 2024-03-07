@@ -43,6 +43,23 @@ class Result {
             if (signOut.containsKey(id) && signOut.get(id) - signIn.get(id) <= maxSpan) result.add(id);
         result.sort(Comparator.comparingInt(Integer::parseInt));
         return result;
+
+//        HashMap<String, int[]> userTimes = new HashMap<>();
+//        for (String log : logs) {
+//            String[] logArr = log.split(" ");
+//            String id = logArr[0];
+//            int time = Integer.parseInt(logArr[1]);
+//            String status = logArr[2];
+//            if (!userTimes.containsKey(id)) userTimes.put(id, new int[]{Integer.MAX_VALUE, Integer.MIN_VALUE});
+//            if (status.equals("sign-in")) userTimes.get(id)[0] = time;
+//            else userTimes.get(id)[1] = time;
+//        }
+//        List<String> result = new ArrayList<>();
+//        for (Map.Entry<String, int[]> entry : userTimes.entrySet())
+//            if (entry.getValue()[1] - entry.getValue()[0] <= maxSpan && entry.getValue()[1] - entry.getValue()[0] > 0)
+//                result.add(entry.getKey());
+//        result.sort(Comparator.comparingInt(Integer::parseInt));
+//        return result;
     }
 
 }
