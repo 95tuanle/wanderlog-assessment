@@ -29,24 +29,19 @@ class Result {
         // allow using these, and want to see how we do without them.
         //
 
-        HashMap<String, Integer> map = new HashMap<>();
-        List<String> result = new ArrayList<>();
-        System.out.println(logs.size() + " " + maxSpan);
+        HashMap<String, Integer> signIn = new HashMap<>();
+        HashMap<String, Integer> signOut = new HashMap<>();
         for (String log : logs) {
             String[] logArr = log.split(" ");
-            String userId = logArr[0];
-            String timestamp = logArr[1];
-            String action = logArr[2];
-            if (action.equals("sign-in")) {
-                map.put(userId, Integer.parseInt(timestamp));
-            } else {
-
-                if (map.containsKey(userId) && Integer.parseInt(timestamp) - map.get(userId) <= maxSpan) {
-                    System.out.println(userId + " " + timestamp + " " + map.get(userId) + " " + (Integer.parseInt(timestamp) - map.get(userId)));
-                    result.add(userId);
-                }
-            }
+            String id = logArr[0];
+            int time = Integer.parseInt(logArr[1]);
+            String status = logArr[2];
+            if (status.equals("sign-in")) signIn.put(id, time);
+            else signOut.put(id, time);
         }
+        List<String> result = new ArrayList<>();
+        for (String id : signIn.keySet())
+            if (signOut.containsKey(id) && signOut.get(id) - signIn.get(id) <= maxSpan) result.add(id);
         result.sort(Comparator.comparingInt(Integer::parseInt));
         return result;
     }
