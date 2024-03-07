@@ -1,13 +1,10 @@
 import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
-import static java.util.stream.Collectors.joining;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.IntStream;
+
 import static java.util.stream.Collectors.toList;
 
 class Result {
@@ -29,6 +26,15 @@ class Result {
         // We use these tools in our coding too, but in our interviews, we also don't
         // allow using these, and want to see how we do without them.
         //
+        HashMap<String, Integer> map = new HashMap<>();
+        for (String transaction : transactions) map.put(transaction, map.getOrDefault(transaction, 0) + 1);
+        List<String> keys = new ArrayList<>(map.keySet());
+        keys.remove("prune");
+        Collections.sort(keys);
+        List<String> result = new ArrayList<>();
+        if (map.containsKey("prune")) result.add("prune " + map.get("prune"));
+        for (String key : keys) result.add(key + " " + map.get(key));
+        return result;
     }
 
 }
@@ -46,16 +52,11 @@ public class Solution {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-        })
-            .collect(toList());
+        }).collect(toList());
 
         List<String> result = Result.groupTransactions(transactions);
 
-        bufferedWriter.write(
-            result.stream()
-                .collect(joining("\n"))
-            + "\n"
-        );
+        bufferedWriter.write(String.join("\n", result) + "\n");
 
         bufferedReader.close();
         bufferedWriter.close();
